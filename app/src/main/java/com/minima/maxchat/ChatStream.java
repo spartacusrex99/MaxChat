@@ -7,9 +7,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.minima.maxchat.db.ChatRoom;
 import com.minima.maxchat.db.MaxMessage;
 
 import io.realm.Realm;
@@ -27,18 +29,13 @@ public class ChatStream extends AppCompatActivity {
 
     EditText mInput;
 
-    String mChatRoom;
-    String mRoomID;
+    ChatRoom mChatRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.chatter);
-
-        Bundle extras   = getIntent().getExtras();
-        mChatRoom       = extras.getString("name");
-        mRoomID         = extras.getString("roomid");
 
         mRealm = Realm.getDefaultInstance(); // opens "myrealm.realm"
         mChangeListener = new RealmChangeListener<Realm>() {
@@ -50,9 +47,20 @@ public class ChatStream extends AppCompatActivity {
             }
         };
 
+        Bundle extras   = getIntent().getExtras();
+        String roomid   = extras.getString("roomid");
+
+        //Get this room..
+        RealmResults<ChatRoom> allrooms = mRealm.where(ChatRoom.class).equalTo("RandomID",roomid).findAll();
+        if(allrooms.size()==0){
+            Toast.makeText(this, "ERROR Room does not exist", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mChatRoom  = allrooms.get(0);
+
         //First - before we add the change listener.. set to read
         RealmResults<MaxMessage> allmessages =
-                mRealm.where(MaxMessage.class).equalTo("chatroom",mChatRoom).findAll();
+                mRealm.where(MaxMessage.class).equalTo("roomid",roomid).findAll();
 
         mRealm.beginTransaction();
         for(MaxMessage msg : allmessages){
@@ -71,20 +79,20 @@ public class ChatStream extends AppCompatActivity {
                 String text = mInput.getText().toString();
                 mInput.setText("");
 
-                MainActivity.newMessage(false, mRoomID, mChatRoom,"You",text, false);
+                MainActivity.newMessage(false, mChatRoom.getRandomID(), mChatRoom.getName(),"You",text, false);
 
                 return false;
             }
         });
 
-        setTitle(mChatRoom);
+        setTitle(mChatRoom.getName());
     }
 
     public void updateChatText(){
 
         RealmResults<MaxMessage> allmessages =
                 mRealm.where(MaxMessage.class)
-                        .equalTo("chatroom",mChatRoom)
+                        .equalTo("roomid",mChatRoom.getRandomID())
                         .findAll()
                         .sort("timemilli", Sort.ASCENDING);
 
@@ -96,7 +104,6 @@ public class ChatStream extends AppCompatActivity {
 
         Spanned html = Html.fromHtml(fulltext.toString(), Html.FROM_HTML_MODE_LEGACY);
         mChatView.setText(html);
-//        mChatView.invalidate();
     }
 
     @Override

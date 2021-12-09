@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //Now open her up..
                 Intent chatter = new Intent(MainActivity.this, ChatStream.class);
-                chatter.putExtra("name", mm.getChatroom());
                 chatter.putExtra("roomid", mm.getRoomid());
                 startActivity(chatter);
             }
