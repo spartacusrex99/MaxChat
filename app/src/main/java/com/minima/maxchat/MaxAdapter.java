@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.minima.maxchat.db.MaxMessage;
+
 import java.util.ArrayList;
 import java.util.Date;
 

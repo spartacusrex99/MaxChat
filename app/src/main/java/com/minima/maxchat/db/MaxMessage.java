@@ -1,4 +1,4 @@
-package com.minima.maxchat;
+package com.minima.maxchat.db;
 
 import java.util.Date;
 

@@ -9,6 +9,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.minima.maxchat.db.MaxMessage;
 
 import java.util.ArrayList;
 import java.util.Random;
