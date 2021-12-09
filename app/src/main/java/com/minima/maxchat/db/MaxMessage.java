@@ -6,12 +6,31 @@ import io.realm.RealmObject;
 
 public class MaxMessage extends RealmObject {
 
+    private String roomid;
     private String chatroom;
+
+    private String chatuser;
 
     private String from;
     private String message;
     private long timemilli = System.currentTimeMillis();
     private boolean unread = true;
+
+    public String getRoomid() {
+        return roomid;
+    }
+
+    public void setRoomid(String roomid) {
+        this.roomid = roomid;
+    }
+
+    public String getChatuser() {
+        return chatuser;
+    }
+
+    public void setChatuser(String chatuser) {
+        this.chatuser = chatuser;
+    }
 
     public String getChatroom() {
         return chatroom;

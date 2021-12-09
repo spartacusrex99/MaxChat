@@ -28,6 +28,7 @@ public class ChatStream extends AppCompatActivity {
     EditText mInput;
 
     String mChatRoom;
+    String mRoomID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ChatStream extends AppCompatActivity {
 
         Bundle extras   = getIntent().getExtras();
         mChatRoom       = extras.getString("name");
+        mRoomID         = extras.getString("roomid");
 
         mRealm = Realm.getDefaultInstance(); // opens "myrealm.realm"
         mChangeListener = new RealmChangeListener<Realm>() {
@@ -69,7 +71,7 @@ public class ChatStream extends AppCompatActivity {
                 String text = mInput.getText().toString();
                 mInput.setText("");
 
-                MainActivity.newMessage(false,mChatRoom,"You",text, false);
+                MainActivity.newMessage(false, mRoomID, mChatRoom,"You",text, false);
 
                 return false;
             }

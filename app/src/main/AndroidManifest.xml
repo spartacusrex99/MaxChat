@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".ChatStream" android:launchMode="singleInstance"  android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ProfileActivity" android:launchMode="singleInstance"  android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <receiver android:name=".MyBroadcastReceiver" android:exported="true"/>
 

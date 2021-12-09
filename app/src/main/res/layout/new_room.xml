@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Room Name : "
+        android:textSize="12dp"/>
+
+    <EditText
+        android:id="@+id/chatroom_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="room name.."
+        android:inputType="text"
+        android:maxLines="1"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User : "
+        android:textSize="12dp"/>
+
+    <EditText
+        android:id="@+id/chatroom_user"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="user@host.."
+        android:inputType="text"
+        android:maxLines="1"/>
+
+</LinearLayout >
