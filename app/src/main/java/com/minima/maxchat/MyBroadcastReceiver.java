@@ -24,12 +24,12 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 //        String data = intent.getExtras().getString("data");
         Toast.makeText(context, "MAXIMA BR!!", Toast.LENGTH_LONG).show();
 
-        String CHANNEL_ID = "com.minima.myapplication";
+        String CHANNEL_ID = "com.minima.maxchat";
 
         // Create our notification channel here & add channel to Manager's list
         NotificationChannel serviceChannel = new NotificationChannel(
                 CHANNEL_ID,
-                "Minima Node Foreground Service Channel",
+                "Maxima Node Foreground Service Channel",
                 NotificationManager.IMPORTANCE_LOW
         );
 
@@ -42,41 +42,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         Notification mNotification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("Title")
                 .setAutoCancel(true)
-                .setContentText("Maxima Status Channel")
+                .setContentText("Maxima")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(mPendingIntent)
                 .build();
 
         mNotificationManager.notify(1,mNotification);
-
-//        String NOTIFICATION_CHANNEL_ID = "com.minima.myapplication";
-//        CharSequence name =  "My Background Service";
-//        String description =  "My Background Service";
-//        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//
-//        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
-//        channel.setDescription(description);
-//
-//        // Register the channel with the system; you can't change the importance
-//        // or other notification behaviors after this
-//        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-//        notificationManager.createNotificationChannel(channel);
-//
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
-//
-//        Notification  notification  = notificationBuilder.setOngoing(true)
-//                .setSmallIcon(R.drawable.ic_launcher_foreground)
-//                .setContentTitle("Service running")
-//                .setContentText("new")
-//                .setPriority(NotificationManager.IMPORTANCE_MIN)
-//                .setCategory(Notification.CATEGORY_SERVICE)
-//                .build();
-//
-////        NotificationManagerCompat notificationManagerq =
-////                NotificationManagerCompat.from(context);
-//
-//        // notificationId is a unique int for each notification that you must define
-//        notificationManager.notify(1, notificationBuilder.build());
-
     }
 }
