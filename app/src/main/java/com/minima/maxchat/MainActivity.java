@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -66,23 +67,17 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Random rand = new Random();
-//                String chatroom = "Paddy "+rand.nextInt(5);
-//                String message = "Hello ! "+rand.nextInt(1000);
-//                newMessage(true, chatroom,chatroom,message, true);
+                Random rand = new Random();
+                String chatroom = "Paddy "+rand.nextInt(5);
+                String message = "Hello ! "+rand.nextInt(1000);
+                newMessage(true, chatroom,chatroom,message, true);
 
                 //Braodcast an Intent..
-                Intent i= new Intent( MainActivity.this, MyBroadcastReceiver.class);
-                sendBroadcast(i);
-
+//                Intent i= new Intent( MainActivity.this, MyBroadcastReceiver.class);
+//                sendBroadcast(i);
             }
         });
 
-
-
-//        Intent intent = new Intent(this, ReceiveService.class);
-//        startService(intent);
-//        startForegroundService(intent);
     }
 
     public void updateListView(){
