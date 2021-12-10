@@ -1,5 +1,6 @@
 package com.minima.maxchat;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
@@ -7,6 +8,9 @@ import android.text.Layout;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +47,8 @@ public class ChatStream extends AppCompatActivity {
 
     String mChatName;
 
+    String mRoomID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,7 @@ public class ChatStream extends AppCompatActivity {
         }
         mChatRoom  = allrooms.get(0);
         mToUser    = mChatRoom.getUser();
+        mRoomID    = mChatRoom.getRandomID();
 
         //First - before we add the change listener.. set to read
         RealmResults<MaxMessage> allmessages =
@@ -104,6 +111,43 @@ public class ChatStream extends AppCompatActivity {
         });
 
         setTitle(mChatRoom.getName());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chatroom, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.deleteroom:
+
+                mRealm.removeChangeListener(mChangeListener);
+
+                //Delete this room..
+                mRealm.beginTransaction();
+
+                    //Delete the messages..
+                    mRealm.where(MaxMessage.class).equalTo("roomid",mRoomID).findAll().deleteAllFromRealm();
+
+                    //And now the chatroom..
+                    mRealm.where(ChatRoom.class).equalTo("RandomID",mRoomID).findAll().deleteAllFromRealm();
+
+                mRealm.commitTransaction();
+
+                mRealm.removeChangeListener(mChangeListener);
+
+                finish();
+
+                break;
+
+        }
+
+        return true;
     }
 
     public void updateChatText(){
