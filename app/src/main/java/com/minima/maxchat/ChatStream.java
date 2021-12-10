@@ -3,6 +3,7 @@ package com.minima.maxchat;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
@@ -122,8 +123,13 @@ public class ChatStream extends AppCompatActivity {
         Spanned html = Html.fromHtml(fulltext.toString(), Html.FROM_HTML_MODE_LEGACY);
         mChatView.setText(html);
 
-        int offset = mChatView.getLineCount() * mChatView.getLineHeight();
-        mChatView.scrollTo(0,offset - mChatView.getHeight());
+        final Layout layout = mChatView.getLayout();
+        if(layout != null){
+            int scrollDelta = layout.getLineBottom(mChatView.getLineCount() - 1)
+                    - mChatView.getScrollY() - mChatView.getHeight();
+            if(scrollDelta > 0)
+                mChatView.scrollBy(0, scrollDelta);
+        }
     }
 
     @Override
