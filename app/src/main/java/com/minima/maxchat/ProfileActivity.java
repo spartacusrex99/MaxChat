@@ -12,9 +12,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.minima.maxchat.utils.RPCClient;
+import com.minima.maxchat.utils.json.JSONObject;
+import com.minima.maxchat.utils.json.parser.JSONParser;
+
+import java.io.IOException;
+
 public class ProfileActivity extends AppCompatActivity {
 
     EditText mInput;
+
+    TextView mChatID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +53,39 @@ public class ProfileActivity extends AppCompatActivity {
                 ProfileActivity.this.finish();
             }
         });
+
+        mChatID = findViewById(R.id.chatter_id);
+        getID();
+    }
+
+    public void getID(){
+
+        Runnable rr = new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    String result = RPCClient.sendGET("http://127.0.0.1:9002/maxima");
+                    System.out.println(result);
+
+                    JSONObject json     = (JSONObject) new JSONParser().parse(result);
+                    JSONObject response =  (JSONObject)json.get("response");
+                    String id = (String) response.get("identity");
+
+                    ProfileActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mChatID.setText(id);
+                        }
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread tt = new Thread(rr);
+        tt.start();
     }
 }

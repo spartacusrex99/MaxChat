@@ -32,4 +32,20 @@
         android:layout_gravity="right"
         android:text="Update"/>
 
+    <TextView
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MaxChat UserID : "
+        android:textSize="12dp"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textIsSelectable="true"
+        android:id="@+id/chatter_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12dp"/>
+
 </LinearLayout >

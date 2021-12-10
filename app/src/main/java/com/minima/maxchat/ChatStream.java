@@ -1,5 +1,6 @@
 package com.minima.maxchat;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.minima.maxchat.db.ChatRoom;
 import com.minima.maxchat.db.MaxMessage;
 import com.minima.maxchat.utils.RPCClient;
+import com.minima.maxchat.utils.json.JSONObject;
 import com.minima.maxchat.utils.objects.MiniData;
 import com.minima.maxchat.utils.objects.MiniString;
 
@@ -38,17 +40,21 @@ public class ChatStream extends AppCompatActivity {
 
     String mToUser;
 
+    String mChatName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.chatter);
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MaximaPrefs", 0); // 0 - for private mode
+        mChatName = pref.getString("chatname","noname");
+
         mRealm = Realm.getDefaultInstance(); // opens "myrealm.realm"
         mChangeListener = new RealmChangeListener<Realm>() {
             @Override
             public void onChange(Realm realm) {
-                System.out.println("MAX CHANGE");
                 //Redo the listview..
                 updateChatText();
             }
@@ -87,7 +93,7 @@ public class ChatStream extends AppCompatActivity {
                 String text = mInput.getText().toString();
                 mInput.setText("");
 
-                MainActivity.newMessage(false, mChatRoom.getRandomID(), mChatRoom.getName(),"You",text, false);
+                MainActivity.newMessage(false, mChatRoom.getRandomID(), mChatRoom.getName(),mChatName,text, false);
 
                 //And send it!
                 runMaximaCommand(text);
@@ -141,7 +147,11 @@ public class ChatStream extends AppCompatActivity {
 
     public void runMaximaCommand(String zMessage){
 
-        MiniString text = new MiniString(zMessage);
+        JSONObject maxjson = new JSONObject();
+        maxjson.put("user",mChatName);
+        maxjson.put("message",zMessage);
+
+        MiniString text = new MiniString(maxjson.toString());
         String data     = new MiniData(text.getData()).to0xString();
         String fullcommand = "maxima+function:send+to:"+mToUser+"+application:maxchat+data:"+data;
         runCommand(fullcommand);

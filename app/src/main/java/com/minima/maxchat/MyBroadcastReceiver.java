@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.minima.maxchat.db.ChatRoom;
 import com.minima.maxchat.db.MaxMessage;
+import com.minima.maxchat.utils.MinimaLogger;
 import com.minima.maxchat.utils.json.parser.JSONParser;
 import com.minima.maxchat.utils.json.parser.ParseException;
 import com.minima.maxchat.utils.objects.MiniData;
@@ -43,10 +44,36 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
         String from      = (String)json.get("from");
         MiniData msgdata = new MiniData((String)json.get("data"));
-        MiniString msg   = new MiniString(msgdata.getBytes());
+        String strmsg    = new MiniString(msgdata.getBytes()).toString();
+
+        String username = "Them";
+        String sentmsg  = strmsg;
+        if(strmsg.startsWith("{")){
+            //It's a JSON
+            try {
+                JSONObject jsonmsg = (JSONObject) new JSONParser().parse(strmsg);
+
+                username = (String)jsonmsg.get("user");
+                sentmsg  = (String)jsonmsg.get("message");
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(username == null){
+            username = "Them";
+        }
+        if(sentmsg == null){
+            sentmsg = "";
+        }
+
 
         //The chat room
         ChatRoom cr = null;
+
+        String crname = "";
+        String crchat = "";
 
         //Find the chatroom..
         Realm realm = Realm.getDefaultInstance();
@@ -56,22 +83,34 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             RealmResults<ChatRoom> allrooms = realm.where(ChatRoom.class).equalTo("user",from).findAll();
             if(allrooms.size()==0){
                 //It's a new room..
-                Toast.makeText(context, "New Room!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "New Room!", Toast.LENGTH_SHORT).show();
 
                 cr = new ChatRoom();
-                cr.setName("ROOM "+new Random().nextInt(1000));
+                if(username.equals("Them")){
+                    cr.setName("ROOM "+new Random().nextInt(1000));
+                }else{
+                    cr.setName(username);
+                }
+
                 cr.setUser(from);
 
                 realm.beginTransaction();
-                realm.copyToRealm(cr);
+                    realm.copyToRealm(cr);
                 realm.commitTransaction();
+
+                //Add a message
+                newMessage(realm,cr.getRandomID(),cr.getName(),from ,"Created room",true);
+                newMessage(realm,cr.getRandomID(),cr.getName(),username ,"Added you",true);
 
             }else {
                 cr = allrooms.get(0);
             }
 
             //Add a message
-            newMessage(realm,cr.getRandomID(),cr.getName(),from ,msg.toString(),true);
+            newMessage(realm,cr.getRandomID(),cr.getName(),username ,sentmsg,true);
+
+            crname = new String(cr.getName());
+            crchat = new String(strmsg);
 
         } finally {
             realm.close();
@@ -98,10 +137,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         PendingIntent mPendingIntent = PendingIntent.getActivity(context, 0 , NotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification mNotification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(cr.getName()+" : "+msg.toString())
+                .setContentTitle(username+" : "+crchat)
                 .setAutoCancel(true)
                 .setContentText("MaxChat")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(android.R.drawable.sym_action_chat)
                 .setContentIntent(mPendingIntent)
                 .build();
 
