@@ -13,6 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.minima.maxchat.db.ChatRoom;
 import com.minima.maxchat.db.MaxMessage;
+import com.minima.maxchat.utils.RPCClient;
+import com.minima.maxchat.utils.objects.MiniData;
+import com.minima.maxchat.utils.objects.MiniString;
+
+import java.io.IOException;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -30,6 +35,8 @@ public class ChatStream extends AppCompatActivity {
     EditText mInput;
 
     ChatRoom mChatRoom;
+
+    String mToUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,7 @@ public class ChatStream extends AppCompatActivity {
             return;
         }
         mChatRoom  = allrooms.get(0);
+        mToUser    = mChatRoom.getUser();
 
         //First - before we add the change listener.. set to read
         RealmResults<MaxMessage> allmessages =
@@ -81,6 +89,9 @@ public class ChatStream extends AppCompatActivity {
 
                 MainActivity.newMessage(false, mChatRoom.getRandomID(), mChatRoom.getName(),"You",text, false);
 
+                //And send it!
+                runMaximaCommand(text);
+
                 return false;
             }
         });
@@ -104,6 +115,9 @@ public class ChatStream extends AppCompatActivity {
 
         Spanned html = Html.fromHtml(fulltext.toString(), Html.FROM_HTML_MODE_LEGACY);
         mChatView.setText(html);
+
+        int offset = mChatView.getLineCount() * mChatView.getLineHeight();
+        mChatView.scrollTo(0,offset - mChatView.getHeight());
     }
 
     @Override
@@ -125,4 +139,44 @@ public class ChatStream extends AppCompatActivity {
         mRealm.removeChangeListener(mChangeListener);
     }
 
+    public void runMaximaCommand(String zMessage){
+
+        MiniString text = new MiniString(zMessage);
+        String data     = new MiniData(text.getData()).to0xString();
+        String fullcommand = "maxima+function:send+to:"+mToUser+"+application:maxchat+data:"+data;
+        runCommand(fullcommand);
+    }
+
+    public static void runCommand(String zCommand){
+
+        Runnable rr = new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    String result = RPCClient.sendGET("http://127.0.0.1:9002/"+zCommand);
+
+                    System.out.println(result);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread tt = new Thread(rr);
+        tt.start();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ((MyApplication)getApplication()).isMainInForeground = true;
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        ((MyApplication)getApplication()).isMainInForeground = false;
+    }
 }

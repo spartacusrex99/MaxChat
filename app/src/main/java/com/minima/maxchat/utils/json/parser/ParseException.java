@@ -1,4 +1,4 @@
-package org.minima.utils.json.parser;
+package com.minima.maxchat.utils.json.parser;
 
 /**
  * ParseException explains why and where the error occurs in source JSON text.

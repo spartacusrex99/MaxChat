@@ -1,4 +1,4 @@
-package org.minima.utils.json.parser;
+package com.minima.maxchat.utils.json.parser;
 
 import java.io.IOException;
 

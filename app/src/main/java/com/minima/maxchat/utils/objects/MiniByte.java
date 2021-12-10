@@ -1,12 +1,12 @@
 package com.minima.maxchat.utils.objects;
 
+import com.minima.maxchat.utils.Streamable;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.minima.utils.Streamable;
-
-public class MiniByte implements Streamable{
+public class MiniByte implements Streamable {
 
     /**
      * Global True False

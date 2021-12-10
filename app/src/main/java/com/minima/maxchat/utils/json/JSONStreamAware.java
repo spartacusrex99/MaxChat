@@ -1,4 +1,4 @@
-package org.minima.utils.json;
+package com.minima.maxchat.utils.json;
 
 import java.io.IOException;
 import java.io.Writer;

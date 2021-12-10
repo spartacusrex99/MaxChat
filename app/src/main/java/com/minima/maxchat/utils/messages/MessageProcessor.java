@@ -1,12 +1,12 @@
 /**
  * 
  */
-package org.minima.utils.messages;
+package com.minima.maxchat.utils.messages;
+
+import com.minima.maxchat.utils.MinimaLogger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.minima.utils.MinimaLogger;
 
 /**
  * @author Spartacus Rex

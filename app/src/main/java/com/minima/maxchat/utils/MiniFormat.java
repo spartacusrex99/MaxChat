@@ -1,12 +1,12 @@
-package org.minima.utils;
+package com.minima.maxchat.utils;
+
+import com.minima.maxchat.utils.json.JSONArray;
+import com.minima.maxchat.utils.json.JSONObject;
 
 import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
-import org.minima.utils.json.JSONArray;
-import org.minima.utils.json.JSONObject;
 
 public class MiniFormat {
 

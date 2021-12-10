@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.minima.utils.messages;
+package com.minima.maxchat.utils.messages;
 
 import java.util.LinkedList;
 

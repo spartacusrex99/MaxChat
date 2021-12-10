@@ -1,4 +1,4 @@
-package org.minima.utils;
+package com.minima.maxchat.utils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

@@ -2,7 +2,10 @@
  * $Id: JSONParser.java,v 1.1 2006/04/15 14:10:48 platform Exp $
  * Created on 2006-4-15
  */
-package org.minima.utils.json.parser;
+package com.minima.maxchat.utils.json.parser;
+
+import com.minima.maxchat.utils.json.JSONArray;
+import com.minima.maxchat.utils.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -10,9 +13,6 @@ import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.minima.utils.json.JSONArray;
-import org.minima.utils.json.JSONObject;
 
 
 /**

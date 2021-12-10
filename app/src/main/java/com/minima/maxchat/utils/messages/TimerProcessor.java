@@ -1,8 +1,8 @@
-package org.minima.utils.messages;
+package com.minima.maxchat.utils.messages;
+
+import com.minima.maxchat.utils.MinimaLogger;
 
 import java.util.LinkedList;
-
-import org.minima.utils.MinimaLogger;
 
 public class TimerProcessor implements Runnable {
 

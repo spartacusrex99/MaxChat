@@ -6,6 +6,11 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class MyApplication extends Application {
+
+    public boolean isMainInForeground       = false;
+    public boolean isChatInForeground       = false;
+    public boolean isProfileInForeground    = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -17,6 +22,11 @@ public class MyApplication extends Application {
                 .name("myrealm.realm").build();
 
         Realm.setDefaultConfiguration(config);
-
     }
+
+    public boolean isForeground(){
+        return isChatInForeground || isMainInForeground || isProfileInForeground;
+    }
+
+
 }

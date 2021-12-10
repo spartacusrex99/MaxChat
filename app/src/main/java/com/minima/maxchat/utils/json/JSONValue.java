@@ -2,7 +2,10 @@
  * $Id: JSONValue.java,v 1.1 2006/04/15 14:37:04 platform Exp $
  * Created on 2006-4-15
  */
-package org.minima.utils.json;
+package com.minima.maxchat.utils.json;
+
+import com.minima.maxchat.utils.json.parser.JSONParser;
+import com.minima.maxchat.utils.json.parser.ParseException;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -12,10 +15,6 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import org.minima.utils.json.parser.JSONParser;
-import org.minima.utils.json.parser.ParseException;
-
 
 /**
  * @author FangYidong<fangyidong@yahoo.com.cn>
@@ -93,7 +92,7 @@ public class JSONValue {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static Object parseWithException(Reader in) throws IOException, ParseException{
+	public static Object parseWithException(Reader in) throws IOException, ParseException {
 		JSONParser parser=new JSONParser();
 		return parser.parse(in);
 	}

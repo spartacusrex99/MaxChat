@@ -1,4 +1,4 @@
-package org.minima.utils;
+package com.minima.maxchat.utils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

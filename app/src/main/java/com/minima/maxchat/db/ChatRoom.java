@@ -7,8 +7,8 @@ import io.realm.RealmObject;
 public class ChatRoom extends RealmObject {
 
     private String RandomID = MiniData.getRandomData(32).to0xString();
-    private String Name;
-    private String User;
+    private String name;
+    private String user;
 
     public String getRandomID() {
         return RandomID;
@@ -19,19 +19,19 @@ public class ChatRoom extends RealmObject {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getUser() {
-        return User;
+        return user;
     }
 
     public void setUser(String user) {
-        User = user;
+        this.user = user;
     }
 
 }

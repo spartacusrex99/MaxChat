@@ -230,4 +230,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ((MyApplication)getApplication()).isMainInForeground = true;
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        ((MyApplication)getApplication()).isMainInForeground = false;
+    }
 }

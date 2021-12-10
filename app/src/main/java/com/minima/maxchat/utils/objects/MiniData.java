@@ -1,6 +1,9 @@
 package com.minima.maxchat.utils.objects;
 
 import com.minima.maxchat.utils.BaseConverter;
+import com.minima.maxchat.utils.MiniFormat;
+import com.minima.maxchat.utils.MinimaLogger;
+import com.minima.maxchat.utils.Streamable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -10,10 +13,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Arrays;
-
-import org.minima.utils.MiniFormat;
-import org.minima.utils.MinimaLogger;
-import org.minima.utils.Streamable;
 
 /**
  * @author Spartacus Rex
@@ -253,7 +252,7 @@ public class MiniData implements Streamable {
 
         //Check against maximum allowed
         if(len > MINIMA_MAX_MINIDATA_LENGTH) {
-            throw new IOException("Read Error : MiniData Length larger than maximum allowed (256 MB) "+MiniFormat.formatSize(len));
+            throw new IOException("Read Error : MiniData Length larger than maximum allowed (256 MB) "+ MiniFormat.formatSize(len));
         }
 
         if(zSize != -1) {

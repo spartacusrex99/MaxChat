@@ -1,4 +1,4 @@
-package org.minima.utils.json;
+package com.minima.maxchat.utils.json;
 
 /**
  * Beans that support customized output of JSON text shall implement this interface.  

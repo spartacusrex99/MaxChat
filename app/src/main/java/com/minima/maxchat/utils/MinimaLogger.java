@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.minima.utils;
+package com.minima.maxchat.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,11 +1,11 @@
 package com.minima.maxchat.utils.objects;
 
+import com.minima.maxchat.utils.Streamable;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-
-import org.minima.utils.Streamable;
 
 public class MiniString implements Streamable {
 

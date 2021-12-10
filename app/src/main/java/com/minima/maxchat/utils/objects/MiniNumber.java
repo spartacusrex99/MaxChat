@@ -1,5 +1,7 @@
 package com.minima.maxchat.utils.objects;
 
+import com.minima.maxchat.utils.Streamable;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -7,8 +9,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
-import org.minima.utils.Streamable;
 
 /**
  * All the Inputs and Outputs of transactions use this class.
