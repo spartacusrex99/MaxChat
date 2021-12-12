@@ -99,8 +99,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 realm.commitTransaction();
 
                 //Add a message
-                newMessage(realm,cr.getRandomID(),cr.getName(),from ,"Created room",true);
-                newMessage(realm,cr.getRandomID(),cr.getName(),username ,"Added you",true);
+                newMessage(realm,cr.getRandomID(),cr.getName(),from ," contacted you..",true);
 
             }else {
                 cr = allrooms.get(0);
@@ -137,7 +136,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         PendingIntent mPendingIntent = PendingIntent.getActivity(context, 0 , NotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification mNotification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(username+" : "+crchat)
+                .setContentTitle(username+" : "+sentmsg)
                 .setAutoCancel(true)
                 .setContentText("MaxChat")
                 .setSmallIcon(android.R.drawable.sym_action_chat)

@@ -20,7 +20,7 @@
         android:id="@+id/chatroom_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="room name.."
+        android:hint="Choose name.."
         android:inputType="text"
         android:maxLines="1"/>
 
@@ -35,7 +35,7 @@
         android:id="@+id/chatroom_user"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="user@host.."
+        android:hint="Mx..User@host"
         android:inputType="text"
         android:maxLines="1"/>
 

@@ -1,5 +1,6 @@
 package com.minima.maxchat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.minima.maxchat.db.ChatRoom;
@@ -126,22 +128,37 @@ public class ChatStream extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.deleteroom:
 
-                mRealm.removeChangeListener(mChangeListener);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage("Delete this chat room ?");
+                builder1.setCancelable(true);
 
-                //Delete this room..
-                mRealm.beginTransaction();
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //Remove the change listener..
+                                mRealm.removeChangeListener(mChangeListener);
 
-                    //Delete the messages..
-                    mRealm.where(MaxMessage.class).equalTo("roomid",mRoomID).findAll().deleteAllFromRealm();
+                                //Delete this room..
+                                mRealm.beginTransaction();
+                                mRealm.where(MaxMessage.class).equalTo("roomid",mRoomID).findAll().deleteAllFromRealm();
+                                mRealm.where(ChatRoom.class).equalTo("RandomID",mRoomID).findAll().deleteAllFromRealm();
+                                mRealm.commitTransaction();
 
-                    //And now the chatroom..
-                    mRealm.where(ChatRoom.class).equalTo("RandomID",mRoomID).findAll().deleteAllFromRealm();
+                                ChatStream.this.finish();
+                            }
+                        });
 
-                mRealm.commitTransaction();
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
 
-                mRealm.removeChangeListener(mChangeListener);
-
-                finish();
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
 
                 break;
 
@@ -203,7 +220,7 @@ public class ChatStream extends AppCompatActivity {
 
         MiniString text = new MiniString(maxjson.toString());
         String data     = new MiniData(text.getData()).to0xString();
-        String fullcommand = "maxima+function:send+to:"+mToUser+"+application:maxchat+data:"+data;
+        String fullcommand = "maxima+action:send+to:"+mToUser+"+application:maxchat+data:"+data;
         runCommand(fullcommand);
     }
 
