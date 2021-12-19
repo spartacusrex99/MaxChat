@@ -55,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         mChatID = findViewById(R.id.chatter_id);
+        mChatID.setText("Fetching Maxima ID..");
         getID();
     }
 
