@@ -42,6 +42,13 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
 
+        //Is this a max chat message
+        String application = (String)json.get("application");
+        if(!application.equals("maxchat")){
+            //Not a maxchat message
+            return;
+        }
+
         String from      = (String)json.get("from");
         MiniData msgdata = new MiniData((String)json.get("data"));
         String strmsg    = new MiniString(msgdata.getBytes()).toString();
